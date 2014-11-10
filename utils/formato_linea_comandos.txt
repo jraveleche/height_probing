@@ -1,0 +1,3 @@
+python probing.py archivo.bot.etch.nc x y dx dy z_depth
+
+python probing.py archivo.bot.etch.nc x y
