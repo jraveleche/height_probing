@@ -1,3 +1,23 @@
-python probing.py archivo.bot.etch.nc x y dx dy z_depth
+Formato de modificación de archivo de código G:
+	Realiza el probing sobre la superficie indicada, obtiene las funciones de interpolación, las grafica y reemplaza el código G especificado en el archivo 
+	
+	En este se especifica el tamaño, los avances y la profundidad de fresado.
+	
+		python probing.py -f <archivo> <x> <y> <dx> <dy> <prof_z>
 
-python probing.py archivo.bot.etch.nc x y
+	En este se especifica el tamaño y utiliza los avances dx=-10, dy=10, prof_z=0.100mm por defecto
+	
+		python probing.py -f <archivo> <x> <y>
+
+Formato de prueba de alturas (sin modificación de archivo):
+	Realiza el probing sobre la superficie indicada, obtiene las funciones de interpolación y las grafica junto con los puntos obtenidos.
+
+	En este se especifica el tamaño de la placa y los avances
+	
+		python probing.py -p <x> <y> <dx> <dy>
+
+	En este se especifica el tamaño de la placa, y utiliza los avances por defecto
+	
+		python probing.py -p <x> <y>
+		
+Si el programa corre sólo con un un argumento (el nombre del programa mismo), que pregunte por el tamaño de la placa, haga el probing y grafique los puntos y el modelo.  
