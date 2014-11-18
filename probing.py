@@ -195,6 +195,46 @@ def interpolarMapa(probeMap):
     # Devuelve el objeto de funcion
     return f
 
+'''
+    Define una clase para almacenar la matriz de funciones de interpolación.
+    Utiliza el metodo de llamada __call__ para valuar un punto (x,y)
+    Para calcular la funcion a utilizar, requiere dx y dy
+'''
+class BilinearMatrix(object):
+    def __init__(self, matrixF, dx=DELTA_X, dy=DELTA_Y):
+        self.matrixF = matrixF
+        self.dx = dx
+        self.dy = dy
+
+    def __call__(self, x, y):
+        i = int(x / self.dx)
+        j = int(y / self.dy)
+        f = self.matrixF[i][j]
+        return f(x,y)
+
+'''
+    Obtiene la función de interpolacion dividendo en areas de dx*dy y utilizando
+    los 4 puntos más cercanos.
+'''
+def interporlarMapa2(probeMap, l, h, dx=DELTA_X, dy=DELTA_Y):
+    listaF = []
+    for i in range(l):
+        rowF = []
+        for j in range(h):
+            xi = i*dx
+            xii = (i+1)*dx
+            yj = j*dy
+            yjj = (j+1)*dy
+            xm = [xi, xii, xi, xii]
+            ym = [yj, yj, yjj, yjj]
+            zm = [probeMap[(xi,yj)], probeMap[(xii,yj)], probeMap[(xi,yjj)], probeMap[(xii,yjj)]]
+
+            f = interpolate.interp2d(xm, ym, zm, kind='linear')
+            rowF.append(f)
+            
+        listaF.append(rowF)
+    return listaF
+            
 
 '''
     Modifica el archivo de código G con la funcion especificada
@@ -275,6 +315,10 @@ def imprimeInstrucciones():
 '''
     Realiza la rutina general de probing utilizando el tamaño de la placa.
     Opcionalmente modifica el archivo de código G especificado.
+    length_x -> tamaño de la placa en el eje X (en mm)
+    length_y -> tamaño de la placa en el eje Y (en mm)
+    prof_z -> profundidad de fresado a partir de la superficie de contacto de la placa
+    filename -> Nombre del archivo para modificar el código G
 '''
 def rutinaGeneral(length_x, length_y, dx = DELTA_X, dy = DELTA_Y, prof_z = MILL_DEPTH, filename=None):
     # Obtener la lista de puntos
@@ -292,6 +336,14 @@ def rutinaGeneral(length_x, length_y, dx = DELTA_X, dy = DELTA_Y, prof_z = MILL_
 
     # Obtener la funcion de interpolacion
     f = interpolarMapa(probemap)
+
+    lfunciones = interporlarMapa2(probemap, l, h, dx, dy)
+    print lfunciones
+    bmatrix = BilinearMatrix(lfunciones, dx, dy)
+    print 'f(0,0) = ', bmatrix(0,0)[0]
+    print 'f(-15,15) = ',bmatrix(-15,15)[0]
+    print 'f(-22.734,15.655) = ',bmatrix(-22.734,15.655)[0]
+    
     # Graficar el mapa de alturas
     graficarMapa(probemap, function=f)
 
