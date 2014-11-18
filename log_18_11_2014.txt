@@ -1,0 +1,101 @@
+C:\Users\Rodrigo\Google Drive\proyectos\python\height_probing>python probing.py
+-f cubo4x4.bot.etch.OPT.nc 60 30
+
+=- Programa de Probing -=
+
+Argumentos:  5
+Generando la lista de puntos...
+La lista de puntos es:  [(0, 0), (-10, 0), (-20, 0), (-30, 0), (-40, 0), (-50, 0
+), (-60, 0), (-60, 10), (-50, 10), (-40, 10), (-30, 10), (-20, 10), (-10, 10), (
+0, 10), (0, 20), (-10, 20), (-20, 20), (-30, 20), (-40, 20), (-50, 20), (-60, 20
+), (-60, 30), (-50, 30), (-40, 30), (-30, 30), (-20, 30), (-10, 30), (0, 30)]
+Realizando el mapa de alturas...
+Iniciando conexion con puerto serial...
+
+Grbl 0.9g ['$' for help]
+['$H'|'$X' to unlock]
+[Caution: Unlocked]
+ok
+Probando el punto (0.000,0.000)
+Esperando lectura... 0.0
+Probando el punto (-10.000,0.000)
+Esperando lectura... 0.022
+Probando el punto (-20.000,0.000)
+Esperando lectura... 0.038
+Probando el punto (-30.000,0.000)
+Esperando lectura... 0.07
+Probando el punto (-40.000,0.000)
+Esperando lectura... 0.099
+Probando el punto (-50.000,0.000)
+Esperando lectura... 0.114
+Probando el punto (-60.000,0.000)
+Esperando lectura... 0.111
+Probando el punto (-60.000,10.000)
+Esperando lectura... -0.057
+Probando el punto (-50.000,10.000)
+Esperando lectura... -0.079
+Probando el punto (-40.000,10.000)
+Esperando lectura... -0.086
+Probando el punto (-30.000,10.000)
+Esperando lectura... -0.092
+Probando el punto (-20.000,10.000)
+Esperando lectura... -0.098
+Probando el punto (-10.000,10.000)
+Esperando lectura... -0.076
+Probando el punto (0.000,10.000)
+Esperando lectura... -0.057
+Probando el punto (0.000,20.000)
+Esperando lectura... -0.082
+Probando el punto (-10.000,20.000)
+Esperando lectura... -0.13
+Probando el punto (-20.000,20.000)
+Esperando lectura... -0.168
+Probando el punto (-30.000,20.000)
+Esperando lectura... -0.178
+Probando el punto (-40.000,20.000)
+Esperando lectura... -0.181
+Probando el punto (-50.000,20.000)
+Esperando lectura... -0.184
+Probando el punto (-60.000,20.000)
+Esperando lectura... -0.181
+Probando el punto (-60.000,30.000)
+Esperando lectura... -0.273
+Probando el punto (-50.000,30.000)
+Esperando lectura... -0.298
+Probando el punto (-40.000,30.000)
+Esperando lectura... -0.289
+Probando el punto (-30.000,30.000)
+Esperando lectura... -0.276
+Probando el punto (-20.000,30.000)
+Esperando lectura... -0.244
+Probando el punto (-10.000,30.000)
+Esperando lectura... -0.181
+Probando el punto (0.000,30.000)
+Esperando lectura... -0.105
+Fin del probing...
+Mapa de alturas:  {(-60, 10): -0.057, (-20, 20): -0.168, (0, 20): -0.082, (-30,
+30): -0.276, (-50, 10): -0.079, (0, 10): -0.057, (-20, 10): -0.098, (-50, 20): -
+0.184, (-60, 20): -0.181, (-40, 20): -0.181, (-10, 10): -0.076, (-50, 30): -0.29
+8, (-30, 20): -0.178, (-30, 10): -0.092, (-10, 30): -0.181, (-60, 30): -0.273, (
+-40, 30): -0.28900000000000003, (0, 0): 0.0, (-20, 0): 0.038, (-30, 0): 0.07, (-
+50, 0): 0.11400000000000002, (0, 30): -0.10500000000000001, (-40, 0): 0.099, (-1
+0, 20): -0.13, (-60, 0): 0.11100000000000002, (-10, 0): 0.022, (-40, 10): -0.086
+00000000000001, (-20, 30): -0.244}
+Se ha terminado el mapa, generando el modelo...
+Modificando el archivo original...
+Traceback (most recent call last):
+  File "probing.py", line 410, in <module>
+    rutinaGeneral(length_x, length_y, filename=filename)
+  File "probing.py", line 354, in rutinaGeneral
+    modificarArchivo(filename, bmatrix, prof_z)
+  File "probing.py", line 289, in modificarArchivo
+    gcode = re.sub(G1_PATTERN, f_repl_g1(f), gcode)
+  File "C:\Python27\lib\re.py", line 151, in sub
+    return _compile(pattern, flags).sub(repl, string, count)
+  File "probing.py", line 266, in repl_g1
+    z = f(x, y)[0] - prof_fresado
+  File "probing.py", line 212, in __call__
+    f = self.matrixF[i][j]
+IndexError: list index out of range
+
+C:\Users\Rodrigo\Google Drive\proyectos\python\height_probing>

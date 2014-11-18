@@ -331,26 +331,29 @@ def rutinaGeneral(length_x, length_y, dx = DELTA_X, dy = DELTA_Y, prof_z = MILL_
     # Obtener las alturas de los puntos
     print 'Realizando el mapa de alturas...'
     #probemap = realizarProbing(puntos)
-    probemap = {(-10, 20): -0.057, (0, 0): 0.0, (-20, 0): 0.003, (0, 20): -0.012, (-30, 20): -0.139, (-10, 30): -0.095, (-30, 10): -0.082, (-30, 0): -0.012, (-20, 20): -0.101, (0, 10): 0.019, (0, 30): -0.031, (-30, 30): -0.178, (-20, 10): -0.063, (-10, 10): -0.025, (-10, 0): 0.026, (-20, 30): -0.146}
+    #print 'Mapa de alturas: ', probemap
+    # Probemap de 60x30 mm
+    probemap = {(-60, 10): -0.057, (-20, 20): -0.168, (0, 20): -0.082, (-30,30): -0.276, (-50, 10): -0.079, (0, 10): -0.057, (-20, 10): -0.098, (-50, 20): -0.184, (-60, 20): -0.181, (-40, 20): -0.181, (-10, 10): -0.076, (-50, 30): -0.298, (-30, 20): -0.178, (-30, 10): -0.092, (-10, 30): -0.181, (-60, 30): -0.273, (-40, 30): -0.289, (0, 0): 0.0, (-20, 0): 0.038, (-30, 0): 0.07, (-50, 0): 0.114, (0, 30): -0.105, (-40, 0): 0.099, (-10, 20): -0.13, (-60, 0): 0.111, (-10, 0): 0.022, (-40, 10): -0.086, (-20, 30): -0.244}
+    # Probemap de 30x30 mm
+    #probemap = {(-10, 20): -0.057, (0, 0): 0.0, (-20, 0): 0.003, (0, 20): -0.012, (-30, 20): -0.139, (-10, 30): -0.095, (-30, 10): -0.082, (-30, 0): -0.012, (-20, 20): -0.101, (0, 10): 0.019, (0, 30): -0.031, (-30, 30): -0.178, (-20, 10): -0.063, (-10, 10): -0.025, (-10, 0): 0.026, (-20, 30): -0.146}
     print 'Se ha terminado el mapa, generando el modelo...'
 
-    # Obtener la funcion de interpolacion
-    f = interpolarMapa(probemap)
+    # Obtener la funcion de interpolacion con todos los puntos
+    #f = interpolarMapa(probemap)
 
-    lfunciones = interporlarMapa2(probemap, l, h, dx, dy)
-    print lfunciones
-    bmatrix = BilinearMatrix(lfunciones, dx, dy)
-    print 'f(0,0) = ', bmatrix(0,0)[0]
-    print 'f(-15,15) = ',bmatrix(-15,15)[0]
-    print 'f(-22.734,15.655) = ',bmatrix(-22.734,15.655)[0]
-    
+    # Obtener la función de interpolación por áreas
+    listaFunciones = interporlarMapa2(probemap, l, h, dx, dy)
+    #print listaFunciones
+    bmatrix = BilinearMatrix(listaFunciones, dx, dy)
+
     # Graficar el mapa de alturas
-    graficarMapa(probemap, function=f)
+    #graficarMapa(probemap, function=f)
+    graficarMapa(probemap)
 
     # Si se especificó, modificar el archivo original con el mapa obtenido.
     if (filename != None):
         print 'Modificando el archivo original...'
-        modificarArchivo(filename, f, prof_z)
+        modificarArchivo(filename, bmatrix, prof_z)
 
 
 '''
